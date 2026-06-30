@@ -1,1 +1,3 @@
 /python/proj/venv/*
+.idea/*
+python/proj/.idea/*
