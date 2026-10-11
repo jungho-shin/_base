@@ -1,3 +1,6 @@
+import pytest
+
+from libs.parsers import JsonParser
 
 
 def test_success_fires_on_parsed(tmp_path, processor, recorder):
@@ -37,3 +40,7 @@ def test_parsing_fails_on_error(tmp_path, processor, recorder):
 
     assert result is None
     recorder.assert_single_error(path, "파싱 실패")
+
+def test_register_with_string_raises(processor):
+    with pytest.raises(TypeError, match="E_FileType"):
+        processor.register(".json", JsonParser())

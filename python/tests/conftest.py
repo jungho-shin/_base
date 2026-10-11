@@ -1,5 +1,6 @@
 import pytest
 
+from libs.file_types import E_FileType
 from libs.parsers import JsonParser
 from libs.processor import FileProcessor
 
@@ -28,7 +29,7 @@ class EventRecorder:
 @pytest.fixture
 def processor():
     processor = FileProcessor()
-    processor.register(".json", JsonParser())
+    processor.register(E_FileType.JSON, JsonParser())
     return processor
 
 @pytest.fixture

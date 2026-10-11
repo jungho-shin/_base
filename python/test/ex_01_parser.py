@@ -1,15 +1,11 @@
-# import sys
-
-from libs.parsers import JsonParser, TextParser
-
-# for p in sys.path:
-#     print(p)
-
-
 from pathlib import Path
 
+from libs.file_types import E_FileType
+from libs.parsers import JsonParser, TextParser
 from libs.processor import FileProcessor
 
+BASE_DIR = Path(__file__).parent
+SAMPLE_DIR = BASE_DIR / "sample"
 
 class Stats:
     def __init__(self):
@@ -27,8 +23,8 @@ class Stats:
 
 def main():
     processor = FileProcessor()
-    processor.register(".json", JsonParser())
-    processor.register(".txt", TextParser())
+    processor.register(E_FileType.JSON, JsonParser())
+    processor.register(E_FileType.TEXT, TextParser())
 
     processor.on_parsed += lambda path, data: print(f"[성공] {path.name} -> {data}")
     processor.on_error += lambda path, msg: print(f"[실패] {path.name} -> {msg}")
@@ -36,9 +32,6 @@ def main():
     stats = Stats()
     processor.on_parsed += stats.count_success
     processor.on_error += stats.count_error
-
-    BASE_DIR = Path(__file__).parent
-    SAMPLE_DIR = BASE_DIR / "sample"
 
     paths = [
         SAMPLE_DIR / "empty.txt",
